@@ -258,7 +258,8 @@ public class DBView extends JFrame {
 				sb.append("- - - - - \n");
 			}
 			for (int j = 0; j < rows[i].length(); j++) {
-				sb.append(rows[i].charAt(j));
+				char cell = (rows[i].charAt(j) != '-') ? rows[i].charAt(j) : ' ';
+				sb.append(cell);
 				if (j < rows[i].length() - 1) {
 					sb.append(" | ");
 				}
