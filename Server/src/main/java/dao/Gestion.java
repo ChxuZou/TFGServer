@@ -105,6 +105,29 @@ public class Gestion {
 		}
 		return partidas;
 	}
+	
+	public List<Partida> buscarTodos() {
+		List<Partida> partidas = new ArrayList<>();
+		String sql = """
+				SELECT p.id AS id,
+				p.jugador1 AS jugador1,
+				p.jugador2 AS jugador2,
+				p.tablero AS tablero,
+				p.resultado AS resultado,
+				p.hora AS hora
+				FROM partida p
+				""";
+		try {
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				partidas.add(lectura(rs));
+			}
+		} catch (SQLException e) {
+		}
+		return partidas;
+	}
+
 
 	private Partida lectura(ResultSet rs) {
 		try {

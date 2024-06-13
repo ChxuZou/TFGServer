@@ -26,7 +26,7 @@ public class Board {
 
 		for (int row = 0; row < BOARD_ROWS; row++) {
 			for (int col = 0; col < BOARD_COLS; col++) {
-				str += board[row][col];
+				str += board[col][row];
 			}
 			str += "|";
 		}

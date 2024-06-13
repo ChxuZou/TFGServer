@@ -122,10 +122,6 @@ public class GameHandler extends Thread {
 				bdManager.insertar(game);
 			}
 
-			Partida game = new Partida(playerNames.get(player1), playerNames.get(player2), "win:" + playerName,
-					board.toString());
-			bdManager.insertar(game);
-
 			input1.close();
 			input2.close();
 

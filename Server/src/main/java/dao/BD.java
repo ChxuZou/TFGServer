@@ -68,8 +68,8 @@ public class BD {
 		String sqls = """
 					CREATE TABLE IF NOT EXISTS partida (
 						id INTEGER PRIMARY KEY,
-						jugador1 TEXT UNIQUE NOT NULL,
-						jugador2 TEXT DEFAULT NULL,
+						jugador1 TEXT NOT NULL,
+						jugador2 TEXT NOT NULL,
 						resultado TEXT NOT NULL,
 						tablero TEXT NOT NULL,
 						hora TEXT NOT NULL
