@@ -1,5 +1,11 @@
 import java.net.Socket;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+
+import dao.Gestion;
+import dao.Partida;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -11,6 +17,7 @@ public class GameHandler extends Thread {
 	private Board board;
 	private HashMap<CellState, Socket> playerFiguras;
 	private HashMap<Socket, String> playerNames;
+	private Gestion bdManager;
 
 	public GameHandler(Socket player1, Socket player2) {
 		this.player1 = player1;
@@ -18,6 +25,7 @@ public class GameHandler extends Thread {
 		board = new Board();
 		playerFiguras = new HashMap<CellState, Socket>();
 		playerNames = new HashMap<Socket, String>();
+		this.bdManager = new Gestion();
 	}
 
 	private CellState assignRandomCellState() {
@@ -58,10 +66,9 @@ public class GameHandler extends Thread {
 
 			boolean turn = player1.equals(playerFiguras.get(whoPlays));
 
-			String messageToPlayer1 = playerNames.get(playerFiguras.get(whoPlays)) + " " + pieza1.toString() + " "
-					+ turn;
-			String messageToPlayer2 = playerNames.get(playerFiguras.get(whoPlays)) + " " + pieza2.toString() + " "
-					+ !turn;
+			String baseMessage = playerNames.get(player1) + " " + playerNames.get(player2) + " ";
+			String messageToPlayer1 = baseMessage + pieza1.toString() + " " + turn;
+			String messageToPlayer2 = baseMessage + pieza2.toString() + " " + !turn;
 
 			output1.println(messageToPlayer1);
 			output2.println(messageToPlayer2);
@@ -87,8 +94,7 @@ public class GameHandler extends Thread {
 				message = currentPlayerInput.readLine().split(" ");
 				playerName = playerNames.get(playerFiguras.get(whoPlays));
 
-				movement = new Movement(playerName, whoPlays, Integer.parseInt(message[0]),
-						Integer.parseInt(message[1]));
+				movement = new Movement(whoPlays, Integer.parseInt(message[0]), Integer.parseInt(message[1]));
 
 				board.makeMove(movement.getRow(), movement.getCol(), movement.getFigure());
 
@@ -103,11 +109,23 @@ public class GameHandler extends Thread {
 				output1.println(movement.toString() + " " + playerName);
 				output2.println(movement.toString() + " " + playerName);
 
+				Partida game = new Partida(playerNames.get(player1), playerNames.get(player2), "win:" + playerName,
+						board.toString());
+				bdManager.insertar(game);
+
 			} else {
-				output1.println(movement.toString() + " "+null);
-				output2.println(movement.toString() + " "+null);
+				output1.println(movement.toString() + " " + null);
+				output2.println(movement.toString() + " " + null);
+
+				Partida game = new Partida(playerNames.get(player1), playerNames.get(player2), "draw",
+						board.toString());
+				bdManager.insertar(game);
 			}
-			
+
+			Partida game = new Partida(playerNames.get(player1), playerNames.get(player2), "win:" + playerName,
+					board.toString());
+			bdManager.insertar(game);
+
 			input1.close();
 			input2.close();
 
