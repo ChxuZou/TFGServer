@@ -1,3 +1,4 @@
+package server.logic;
 public class Board {
 	private CellState[][] board;
 	private final int BOARD_ROWS = 3, BOARD_COLS = 3;

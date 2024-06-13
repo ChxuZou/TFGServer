@@ -1,3 +1,4 @@
+package server;
 import java.net.Socket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -5,6 +6,9 @@ import java.util.HashMap;
 
 import dao.Gestion;
 import dao.Partida;
+import server.logic.Board;
+import server.logic.CellState;
+import server.logic.Movement;
 
 import java.io.BufferedReader;
 import java.io.IOException;

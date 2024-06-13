@@ -1,3 +1,4 @@
+package server.logic;
 
 public enum CellState {
 	EMPTY {

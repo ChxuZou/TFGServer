@@ -1,3 +1,4 @@
+package server.logic;
 
 public class Movement {
 	private CellState figure;
