@@ -8,13 +8,18 @@ public class Main {
 	public static void main(String[] args) {
 
 		try {
+			DBViewController controller = new DBViewController();
 			Server server = new Server(PORT);
+			
+			controller.init();
 			server.start();
 			
-			DBViewController controller = new DBViewController();
-			controller.init();
+
+			server.join();
 		} catch (IOException e) {
 			System.out.println("No se pudo iniciar el servidor en el puerto "+ PORT);
+		} catch(InterruptedException e) {
+			System.out.println("Se ha cerrado el server antes de tiempo");
 		}
 
 	}

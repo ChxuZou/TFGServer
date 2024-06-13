@@ -2,7 +2,9 @@ package controller;
 import java.util.List;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 import dao.Gestion;
 import dao.Partida;
@@ -20,9 +22,24 @@ public class DBViewController {
 	public void init() {
 		SwingUtilities.invokeLater(() -> {
 			JFrame.setDefaultLookAndFeelDecorated(true);
-			view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			view.setVisible(true);
+			
+			UIManager.put("OptionPane.yesButtonText", "Cerrar");
+			UIManager.put("OptionPane.noButtonText", "Cancelar");
+			
+			view.addWindowListener(new java.awt.event.WindowAdapter() {
+	            @Override
+	            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+	                if (JOptionPane.showConfirmDialog(view, 
+	                    "¿Estás seguro que quieres cerrar esta ventana? \nEl servidor seguirá ejecutándose en segundo plano", "Cerrar ventana", 
+	                    JOptionPane.YES_NO_OPTION,
+	                    JOptionPane.WARNING_MESSAGE) == JOptionPane.YES_OPTION){
+	                    view.dispose();
+	                }
+	            }
+	        });
 		});
+		
 	}
 
 	public void showAllData() {
