@@ -1,3 +1,4 @@
+package controller;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -5,41 +6,38 @@ import javax.swing.SwingUtilities;
 
 import dao.Gestion;
 import dao.Partida;
+import view.DBView;
 
 public class DBViewController {
 	private Gestion dbController;
-	private JFrame view;
+	private DBView view;
 
 	public DBViewController() {
 		dbController = new Gestion();
-		view = new JFrame();
+		view = new DBView(this);
 	}
 
 	public void init() {
 		SwingUtilities.invokeLater(() -> {
+			JFrame.setDefaultLookAndFeelDecorated(true);
 			view.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			view.setSize(800, 600);
-
 			view.setVisible(true);
 		});
 	}
 
 	public void showAllData() {
 		List<Partida> games = dbController.buscarTodos();
-
-		// view.updateTable(games);
+		view.updateTable(games);
 	}
 
 	public void showByID(int id) {
 		List<Partida> games = dbController.buscarID(id);
-
-		// view.updateTable(games);
+		view.updateTable(games);
 	}
 
 	public void showByName(String name) {
 		List<Partida> games = dbController.buscarNombre(name);
-
-		// view.updateTable(games);
+		view.updateTable(games);
 	}
 
 }
