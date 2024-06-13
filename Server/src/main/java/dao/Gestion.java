@@ -67,7 +67,7 @@ public class Gestion {
 				p.resultado AS resultado,
 				p.hora AS hora
 				FROM partida p
-				WHERE p.id LIKE ?
+				WHERE p.id = ?
 				""";
 		try {
 			PreparedStatement ps = conn.prepareStatement(sql);
